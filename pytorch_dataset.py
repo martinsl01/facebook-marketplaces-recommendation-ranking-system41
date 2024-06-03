@@ -8,11 +8,11 @@ from PIL import Image
 from numpy import asarray
 import torch
 
-def  path_to_feature(path):
-    image = Image.open(path)
-    type(image)
-    data = asarray(image)
-    return data.reshape(-1)
+# def  path_to_feature(path):
+#   image = Image.open(path)
+# type(image)
+# data = asarray(image)
+# return data.reshape(-1)
 
 class ProductsDataset(Dataset):
 
@@ -33,12 +33,13 @@ class ProductsDataset(Dataset):
     
     def __getitem__(self, index):
         img_path = os.path.join(self.img_dir, f"{self.img_labels.loc[index, 'image_id']}.jpg")
-        image = path_to_feature(img_path)
-        image_id = self.img_labels.loc[index, 'image_id']
+        image = Image.open(img_path)
+        # print(type(image))
         label = self.img_labels.loc[index, 'labels']
-        image_id = self.transform(image)
+        features = self.transform(image)
+        # print(features.shape)
     
-        return torch.tensor(image_id), label
+        return features, label
 
 
 if __name__ == '__main__':
@@ -47,7 +48,7 @@ if __name__ == '__main__':
     train_images, train_labels = next(iter(train_dataloader))
 
 print(len(dataset))
-print(dataset[200])
+print(dataset[2000])
 
 
 

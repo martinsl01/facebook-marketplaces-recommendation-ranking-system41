@@ -21,11 +21,13 @@ decoder = {k:v for k, v in zip(lab, classes)}
 
 '''Creates new column - 'labels' which contains the numerical label for each category and images'''
 products_data['labels'] = [encoder[category] for category in products_data['category']]
+products_data = products_data.rename(columns={'id': 'image_id'})
 
-col = ['category', 'labels']
+col = ['product_id', 'labels']
 cols = products_data[col]
 
-products_data.to_csv(f'C:/Users/marti/FMRRS/{'training_data.csv'}')
+print(decoder)
+# products_data.to_csv(f'C:/Users/marti/FMRRS/{'training_data.csv'}', index=0)
 
 
 
